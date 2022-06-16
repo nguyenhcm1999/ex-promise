@@ -133,7 +133,7 @@ getcomment()
             var user = data.users.find(function(user){
                 return user.id === comment.user_id
             })
-            console.log(user)
+            
             html += `<li>${user.name}:${comment.content}</li>`
             console.log(html)
         })
