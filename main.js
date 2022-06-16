@@ -116,26 +116,33 @@ getcomment()
         })
         return getuserbyids(userids)
         .then(function(users){
+            
             return {
                 users: users,
                 comments: comments
             }
+        
         })
+        
     })
 
     
 
     .then(function(data){
+        //data trả về users và comments
         var commentBlock = document.getElementById('comment-block');
         html =''
         console.log(data.comments)
+        console.log(data.users)
         data.comments.forEach(function(comment){
             var user = data.users.find(function(user){
+                console.log(user.id === comment.user_id)
                 return user.id === comment.user_id
+                
             })
-            
+            console.log(user)
             html += `<li>${user.name}:${comment.content}</li>`
-            console.log(html)
+            
         })
         
         commentBlock.innerHTML = html;
