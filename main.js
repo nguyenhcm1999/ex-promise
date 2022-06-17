@@ -101,27 +101,35 @@ function getcomment(){
 function getuserbyids(userids){
     return new Promise(function(resolve){
         var listuserids = users.filter(function(user){
+            // true true false sẽ ra id 1 và id 2, loại id3 vì userids trả về 1 2 1
+            // console.log(userids.includes(user.id))
             return userids.includes(user.id)
         })
         
             resolve(listuserids)
-       
+        // ra id 1 và name kien dam , id 2 và name son dang    
+        console.log(listuserids)
+
     })
 }
 
 getcomment()
     .then(function(comments){
         var userids = comments.map(function(comment){
+            
             return comment.user_id
         })
+        //userids là 1 2 1
         return getuserbyids(userids)
         .then(function(users){
-            
+            // users có id 1 name 1 và id 2 name 2
+            console.log(users) 
+            console.log(comments)
             return {
                 users: users,
                 comments: comments
             }
-        
+            
         })
         
     })
@@ -136,7 +144,10 @@ getcomment()
         console.log(data.users)
         data.comments.forEach(function(comment){
             var user = data.users.find(function(user){
+
+                console.log(user.id)
                 console.log(user.id === comment.user_id)
+                
                 return user.id === comment.user_id
                 
             })
@@ -173,4 +184,48 @@ fetch(PostApi)
     })
     .catch(function(err){
         console.log('nooooo');
-    })
+    });
+
+
+
+
+// function getcomment(){
+//     return new Promise(function(resolve){
+//         resolve(comments)
+//     })
+// }
+
+// function getuserbyids(useridscmt){
+//     return new Promise(function(resolve){
+//         var listuserids = users.filter(function(user){
+//             return useridscmt.includes(user.id)
+//         })
+//         resolve(listuserids)
+//     })
+// }
+
+// getcomment()
+// .then(function(comments){
+//     var useridscmt = comments.map(function(comment){
+//         return comment.user_id
+//     })
+//     return getuserbyids(useridscmt)
+//     .then(function(users){
+//         return{
+//             users:users,
+//             comments: comments
+//         }
+//     })
+// })
+
+// .then(function(data){
+//     var commentBlock = document.getElementById('comment-block');
+//     var html = ''
+//     data.comments.forEach(function(comment){
+//         var user =  users.find(function(user){
+//             return user.id === comment.user_id
+//         })
+//         html += `<li>${user.name}:${comment.content}</li>`
+//     })
+//     commentBlock.innerHTML = html
+// })
